@@ -54,7 +54,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.5);
             z-index: -1;
         }
 
@@ -189,7 +189,9 @@
 
         .control-buttons button {
             flex: 1;
-            min-width: 60px;
+            min-width: 100px;
+            /* 고정된 느낌을 주기 위해 최소 너비 증가 */
+            white-space: nowrap;
         }
 
         .loop-info {
@@ -241,8 +243,9 @@
             <h2 class="mdc-typography--headline6"
                 style="margin-bottom: 4px; display: flex; justify-content: space-between; align-items: baseline;">
                 생명되신 주님, 예수!
-                <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary-on-background);">이은정
-                    곡</span>
+                <span
+                    style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary-on-background);">Written
+                    by 이은정</span>
             </h2>
             <ul id="song-list" style="list-style: none; padding: 0; margin: 0;"></ul>
         </div>
@@ -285,6 +288,25 @@
             <!-- Custom Controls -->
             <div id="custom-controls" class="custom-controls">
                 <div class="control-group">
+                    <label>구간 반복</label>
+                    <div class="control-buttons">
+                        <button id="set-a-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">A 지점 설정</span>
+                        </button>
+                        <button id="set-b-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">B 지점 설정</span>
+                        </button>
+                        <button id="toggle-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">반복 시작</span>
+                        </button>
+                        <button id="clear-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">초기화</span>
+                        </button>
+                    </div>
+                    <div id="loop-info" class="loop-info hidden"></div>
+                </div>
+
+                <div class="control-group">
                     <label>재생 속도</label>
                     <div class="control-buttons">
                         <button class="mdc-button mdc-button--outlined speed-btn" data-speed="0.5">
@@ -303,25 +325,6 @@
                             <span class="mdc-button__label">1.5x</span>
                         </button>
                     </div>
-                </div>
-
-                <div class="control-group">
-                    <label>구간 반복</label>
-                    <div class="control-buttons">
-                        <button id="set-a-btn" class="mdc-button mdc-button--outlined loop-btn">
-                            <span class="mdc-button__label">A 지점 설정</span>
-                        </button>
-                        <button id="set-b-btn" class="mdc-button mdc-button--outlined loop-btn">
-                            <span class="mdc-button__label">B 지점 설정</span>
-                        </button>
-                        <button id="toggle-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
-                            <span class="mdc-button__label">반복 시작</span>
-                        </button>
-                        <button id="clear-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
-                            <span class="mdc-button__label">초기화</span>
-                        </button>
-                    </div>
-                    <div id="loop-info" class="loop-info hidden"></div>
                 </div>
             </div>
         </div>
