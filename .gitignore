@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Service Account Key (보안상 제외)
+serviceAccountKey.json
+
+# Media Files (용량이 크므로 제외)
+public/media/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Reference
+rothem-songs-reference/

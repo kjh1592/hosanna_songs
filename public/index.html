@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>호산나 성가대 연습실</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Material Design Components -->
+    <link href="/lib/material-components-web.min.css" rel="stylesheet">
+    <script src="/lib/material-components-web.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --mdc-theme-primary: #2E7D32;
+            --mdc-theme-secondary: #66BB6A;
+            --mdc-theme-on-primary: #ffffff;
+            --text-primary-on-background: #212121;
+            --text-secondary-on-background: #757575;
+        }
+
+        /* Force visibility for raised buttons and any buttons that should have white text when active */
+        .mdc-button--raised,
+        .mdc-button--raised.loop-btn,
+        .mdc-button--raised.speed-btn {
+            background-color: var(--mdc-theme-primary) !important;
+            color: #ffffff !important;
+        }
+
+        .mdc-button--raised .mdc-button__label,
+        .mdc-button--raised .material-icons,
+        .mdc-button--raised.loop-btn .mdc-button__label,
+        .mdc-button--raised.speed-btn .mdc-button__label {
+            color: #ffffff !important;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            background-image: url('/res/cover.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.92);
+            z-index: -1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .mdc-top-app-bar {
+            background-color: var(--mdc-theme-primary);
+        }
+
+        main {
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mdc-card {
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: white;
+        }
+
+        .song-list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .song-list-item:hover {
+            background: #f5f5f5;
+        }
+
+        .song-list-item .icon {
+            font-size: 40px;
+            color: var(--mdc-theme-primary);
+            margin-right: 16px;
+        }
+
+        .song-list-item .info {
+            flex-grow: 1;
+        }
+
+        .song-list-item .title {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--text-primary-on-background);
+        }
+
+        .back-button-large {
+            height: 48px !important;
+            padding: 0 24px !important;
+            --mdc-typography-button-font-size: 1.25rem;
+        }
+
+        /* Part Tabs */
+        .part-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .part-tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .part-tab:hover {
+            background: #C8E6C9;
+        }
+
+        .part-tab.active {
+            background: var(--mdc-theme-primary);
+            color: white;
+            border-color: var(--mdc-theme-primary);
+        }
+
+        /* Video Player */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 16px auto;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-container video,
+        .video-container audio {
+            width: 100%;
+            display: block;
+        }
+
+        /* Custom Controls */
+        .custom-controls {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .control-group {
+            margin-bottom: 12px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary-on-background);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .control-buttons button {
+            flex: 1;
+            min-width: 60px;
+        }
+
+        .loop-info {
+            padding: 8px;
+            background: #C8E6C9;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .part-tabs {
+                flex-direction: column;
+            }
+
+            .part-tab {
+                flex: none;
+            }
+
+            .control-buttons button {
+                flex: none;
+                min-width: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body class="mdc-typography">
+
+    <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <span class="mdc-top-app-bar__title">호산나 성가대 연습실</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" style="padding-right: 16px;">
+                <span id="d-day" style="font-size: 1.2em; font-weight: bold; color: white; cursor: pointer;"></span>
+            </section>
+        </div>
+    </header>
+
+    <main class="mdc-top-app-bar--fixed-adjust">
+        <div id="announcement-container" class="mdc-card">
+            <h2 class="mdc-typography--headline6" style="margin-bottom: 4px;">공지 사항</h2>
+            <p id="announcement-content" style="white-space: pre-wrap;"></p>
+        </div>
+
+        <div id="song-list-container" class="mdc-card">
+            <h2 class="mdc-typography--headline6"
+                style="margin-bottom: 4px; display: flex; justify-content: space-between; align-items: baseline;">
+                생명되신 주님, 예수!
+                <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary-on-background);">이은정
+                    곡</span>
+            </h2>
+            <ul id="song-list" style="list-style: none; padding: 0; margin: 0;"></ul>
+        </div>
+
+        <div id="song-detail-container" class="mdc-card hidden">
+            <button class="mdc-button back-button-large" onclick="history.back()">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_back</i>
+                <span class="mdc-button__label">목록</span>
+            </button>
+            <h2 id="song-title" class="mdc-typography--headline5" style="margin-top: 16px;"></h2>
+
+            <!-- Part Tabs (for songs 1-6) -->
+            <div id="part-tabs-container" class="part-tabs">
+                <div class="part-tab" data-part="soprano">소프라노</div>
+                <div class="part-tab" data-part="alto">알토</div>
+                <div class="part-tab" data-part="tenor">테너</div>
+                <div class="part-tab" data-part="bass">베이스</div>
+            </div>
+
+            <!-- Video Player -->
+            <div id="media-container" class="video-container">
+                <div id="video-group" style="display: none; margin-bottom: 32px;">
+                    <div
+                        style="font-size: 0.9rem; font-weight: 500; color: #FFD600; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
+                        <i class="material-icons" style="font-size: 18px;">videocam</i> 영상 재생
+                    </div>
+                    <video id="main-video" controls preload="auto" playsinline
+                        style="width: 100%; border-radius: 8px;"></video>
+                </div>
+
+                <div id="audio-group" style="display: none; margin-bottom: 16px;">
+                    <div
+                        style="font-size: 0.9rem; font-weight: 500; color: #FFD600; margin-bottom: 8px; display: flex; align-items: center; gap: 4px;">
+                        <i class="material-icons" style="font-size: 18px;">audiotrack</i> 오디오 재생
+                    </div>
+                    <audio id="main-audio" controls preload="auto" style="width: 100%;"></audio>
+                </div>
+            </div>
+
+            <!-- Custom Controls -->
+            <div id="custom-controls" class="custom-controls">
+                <div class="control-group">
+                    <label>재생 속도</label>
+                    <div class="control-buttons">
+                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="0.5">
+                            <span class="mdc-button__label">0.5x</span>
+                        </button>
+                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="0.75">
+                            <span class="mdc-button__label">0.75x</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised speed-btn" data-speed="1">
+                            <span class="mdc-button__label">1x</span>
+                        </button>
+                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="1.25">
+                            <span class="mdc-button__label">1.25x</span>
+                        </button>
+                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="1.5">
+                            <span class="mdc-button__label">1.5x</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>구간 반복</label>
+                    <div class="control-buttons">
+                        <button id="set-a-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">A 지점 설정</span>
+                        </button>
+                        <button id="set-b-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">B 지점 설정</span>
+                        </button>
+                        <button id="toggle-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">반복 시작</span>
+                        </button>
+                        <button id="clear-loop-btn" class="mdc-button mdc-button--outlined loop-btn">
+                            <span class="mdc-button__label">초기화</span>
+                        </button>
+                    </div>
+                    <div id="loop-info" class="loop-info hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dialogs -->
+        <div id="password-dialog" class="mdc-dialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
+                    <h2 class="mdc-dialog__title">관리자 비밀번호</h2>
+                    <div class="mdc-dialog__content">
+                        <div class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField"
+                            style="width: 100%;">
+                            <input type="password" id="password-input" class="mdc-text-field__input">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="password-input" class="mdc-floating-label">비밀번호</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                            <span class="mdc-button__label">취소</span>
+                        </button>
+                        <button type="button" id="submit-password-button" class="mdc-button mdc-dialog__button"
+                            data-mdc-dialog-action="ok">
+                            <span class="mdc-button__label">확인</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+
+        <div id="announcement-dialog" class="mdc-dialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
+                    <h2 class="mdc-dialog__title">공지사항 수정</h2>
+                    <div class="mdc-dialog__content">
+                        <div class="mdc-text-field mdc-text-field--textarea mdc-text-field--outlined"
+                            data-mdc-auto-init="MDCTextField" style="width: 100%;">
+                            <textarea id="announcement-input" class="mdc-text-field__input" rows="8"></textarea>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="announcement-input" class="mdc-floating-label">공지 내용</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                            <span class="mdc-button__label">취소</span>
+                        </button>
+                        <button type="button" id="save-announcement-button" class="mdc-button mdc-dialog__button"
+                            data-mdc-dialog-action="ok">
+                            <span class="mdc-button__label">저장</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="/__/firebase/9.6.1/firebase-app-compat.js"></script>
+    <script src="/__/firebase/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            mdc.autoInit();
+
+            // D-Day 계산
+            const dDayElement = document.getElementById('d-day');
+            if (dDayElement) {
+                const dDay = new Date('2026-04-05');
+                const today = new Date();
+                dDay.setHours(0, 0, 0, 0);
+                today.setHours(0, 0, 0, 0);
+
+                const diffTime = dDay.getTime() - today.getTime();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays > 0) {
+                    dDayElement.textContent = `D-${diffDays}`;
+                } else if (diffDays === 0) {
+                    dDayElement.textContent = 'D-Day';
+                } else {
+                    dDayElement.textContent = `D+${Math.abs(diffDays)}`;
+                }
+            }
+
+            const db = firebase.firestore();
+
+            let songs = [];
+            let currentSong = null;
+            let currentPart = null;
+            let currentMediaElement = null;
+
+            // Loop state
+            let loopA = null;
+            let loopB = null;
+            let isLooping = false;
+            let loopInterval = null;
+
+            const songListContainer = document.getElementById('song-list-container');
+            const songDetailContainer = document.getElementById('song-detail-container');
+            const announcementContainer = document.getElementById('announcement-container');
+            const announcementContent = document.getElementById('announcement-content');
+            const partTabsContainer = document.getElementById('part-tabs-container');
+            const mediaContainer = document.getElementById('media-container');
+            const customControls = document.getElementById('custom-controls');
+
+            // Dialogs
+            const passwordDialog = new mdc.dialog.MDCDialog(document.getElementById('password-dialog'));
+            const announcementDialog = new mdc.dialog.MDCDialog(document.getElementById('announcement-dialog'));
+            const passwordInput = document.getElementById('password-input');
+            const announcementInput = document.getElementById('announcement-input');
+
+            function showView(viewToShow) {
+                [songListContainer, songDetailContainer].forEach(view => {
+                    if (view) view.classList.add('hidden');
+                });
+                if (viewToShow) {
+                    viewToShow.classList.remove('hidden');
+                    if (viewToShow === songListContainer) announcementContainer.classList.remove('hidden');
+                    else announcementContainer.classList.add('hidden');
+                }
+            }
+
+            function showSongList() {
+                showView(songListContainer);
+                stopMedia();
+            }
+
+            function showSongDetail(songId) {
+                const song = songs.find(s => s.id === songId);
+                if (!song) return;
+
+                currentSong = song;
+                document.getElementById('song-title').textContent = song.title;
+
+                // Show/hide part tabs based on song type
+                if (song.media.parts) {
+                    // Songs 1-6: show part tabs
+                    partTabsContainer.classList.remove('hidden');
+                    // Select soprano by default
+                    setTimeout(() => selectPart('soprano'), 100);
+                } else {
+                    // Song 7: hide part tabs, show full media
+                    partTabsContainer.classList.add('hidden');
+                    loadFullMedia();
+                }
+
+                showView(songDetailContainer);
+                history.pushState({ page: 'detail', songId: songId }, song.title);
+            }
+
+            function selectPart(partName) {
+                if (!currentSong || !currentSong.media.parts) return;
+
+                currentPart = partName;
+
+                // Update tab UI
+                document.querySelectorAll('.part-tab').forEach(tab => {
+                    if (tab.dataset.part === partName) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+
+                // Load part video
+                const partData = currentSong.media.parts[partName];
+                if (partData && partData.video) {
+                    loadVideo(partData.video);
+                }
+            }
+
+            const mainVideo = document.getElementById('main-video');
+            const mainAudio = document.getElementById('main-audio');
+            const videoGroup = document.getElementById('video-group');
+            const audioGroup = document.getElementById('audio-group');
+
+            function loadFullMedia() {
+                if (!currentSong || !currentSong.media.full) return;
+
+                stopMedia(); // Cleanup existing
+
+                // Video
+                if (currentSong.media.full.video) {
+                    mainVideo.src = currentSong.media.full.video;
+                    videoGroup.style.display = 'block';
+                    mainVideo.load();
+                    currentMediaElement = mainVideo;
+                    setupMediaControls(mainVideo);
+                } else {
+                    videoGroup.style.display = 'none';
+                    mainVideo.removeAttribute('src');
+                }
+
+                // Audio
+                if (currentSong.media.full.audio) {
+                    mainAudio.src = currentSong.media.full.audio;
+                    audioGroup.style.display = 'block';
+                    mainAudio.load();
+                    // If video exists, controls already point to video. 
+                    if (!currentSong.media.full.video) {
+                        currentMediaElement = mainAudio;
+                        setupMediaControls(mainAudio);
+                    }
+                } else {
+                    audioGroup.style.display = 'none';
+                    mainAudio.removeAttribute('src');
+                }
+            }
+
+            function loadVideo(url) {
+                stopMedia(); // Cleanup existing and reset loop
+
+                mainVideo.src = url;
+                videoGroup.style.display = 'block';
+                audioGroup.style.display = 'none';
+
+                mainVideo.load();
+
+                currentMediaElement = mainVideo;
+                setupMediaControls(mainVideo);
+            }
+
+            function setupMediaControls(mediaElement) {
+                // Reset loop state UI
+                resetLoop();
+
+                // Speed buttons
+                const speedBtns = document.querySelectorAll('.speed-btn');
+                speedBtns.forEach(btn => {
+                    btn.onclick = (e) => {
+                        const speed = parseFloat(btn.dataset.speed);
+                        mediaElement.playbackRate = speed;
+
+                        // Update button styles
+                        speedBtns.forEach(b => {
+                            if (b === btn) {
+                                b.classList.add('mdc-button--raised');
+                                b.classList.remove('mdc-button--outlined');
+                            } else {
+                                b.classList.remove('mdc-button--raised');
+                                b.classList.add('mdc-button--outlined');
+                            }
+                        });
+                    };
+                });
+
+                // Loop buttons
+                document.getElementById('set-a-btn').onclick = () => setLoopPoint('A');
+                document.getElementById('set-b-btn').onclick = () => setLoopPoint('B');
+                document.getElementById('toggle-loop-btn').onclick = toggleLoop;
+                document.getElementById('clear-loop-btn').onclick = resetLoop;
+
+                // Monitor errors - Ignore if intentionally emptied during cleanup
+                mediaElement.onerror = () => {
+                    if (mediaElement.src && mediaElement.src !== window.location.href) {
+                        console.error("Media Error:", mediaElement.error);
+                    }
+                };
+            }
+
+            function setLoopPoint(point) {
+                if (!currentMediaElement) return;
+
+                const time = currentMediaElement.currentTime;
+
+                if (point === 'A') {
+                    loopA = time;
+                } else {
+                    loopB = time;
+                }
+
+                updateLoopInfo();
+            }
+
+            function toggleLoop() {
+                if (!currentMediaElement || loopA === null || loopB === null) {
+                    alert('A와 B 지점을 모두 설정해주세요.');
+                    return;
+                }
+
+                if (loopA >= loopB) {
+                    alert('B 지점이 A 지점보다 뒤에 있어야 합니다.');
+                    return;
+                }
+
+                isLooping = !isLooping;
+                const btn = document.getElementById('toggle-loop-btn');
+
+                if (isLooping) {
+                    btn.classList.add('mdc-button--raised');
+                    btn.querySelector('.mdc-button__label').textContent = '반복 중'; // 텍스트 변경
+                    currentMediaElement.currentTime = loopA;
+                    currentMediaElement.play();
+
+                    // Check loop - Only reset if NOT currently seeking
+                    loopInterval = setInterval(() => {
+                        if (!currentMediaElement.seeking && currentMediaElement.currentTime >= loopB) {
+                            currentMediaElement.currentTime = loopA;
+                        }
+                    }, 100);
+                } else {
+                    btn.classList.remove('mdc-button--raised');
+                    btn.querySelector('.mdc-button__label').textContent = '반복 시작';
+                    if (loopInterval) {
+                        clearInterval(loopInterval);
+                        loopInterval = null;
+                    }
+                }
+
+                updateLoopInfo();
+            }
+
+            function resetLoop() {
+                loopA = null;
+                loopB = null;
+                isLooping = false;
+
+                if (loopInterval) {
+                    clearInterval(loopInterval);
+                    loopInterval = null;
+                }
+
+                const btn = document.getElementById('toggle-loop-btn');
+                btn.classList.remove('mdc-button--raised');
+                btn.querySelector('.mdc-button__label').textContent = '반복 시작';
+
+                updateLoopInfo();
+            }
+
+            function updateLoopInfo() {
+                const info = document.getElementById('loop-info');
+                if (loopA === null && loopB === null) {
+                    info.classList.add('hidden');
+                } else {
+                    info.classList.remove('hidden');
+                    info.textContent = `A: ${formatTime(loopA)} | B: ${formatTime(loopB)} ${isLooping ? '(반복 중)' : ''}`;
+                }
+            }
+
+            function formatTime(seconds) {
+                if (seconds === null) return '--:--';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            function stopMedia() {
+                mainVideo.pause();
+                mainVideo.removeAttribute('src');
+                mainVideo.load();
+                videoGroup.style.display = 'none';
+
+                mainAudio.pause();
+                mainAudio.removeAttribute('src');
+                mainAudio.load();
+                audioGroup.style.display = 'none';
+
+                currentMediaElement = null;
+                resetLoop();
+            }
+
+            // Part tabs event listeners
+            document.querySelectorAll('.part-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    selectPart(tab.dataset.part);
+                });
+            });
+
+            // Fetch songs
+            db.collection("songs").orderBy("order").onSnapshot((querySnapshot) => {
+                const songListEl = document.getElementById("song-list");
+                songListEl.innerHTML = "";
+                songs = [];
+
+                querySnapshot.forEach((doc) => {
+                    const song = { id: doc.id, ...doc.data() };
+                    songs.push(song);
+
+                    const listItem = document.createElement('li');
+                    listItem.className = "song-list-item";
+                    listItem.innerHTML = `
+                        <i class="material-icons icon" aria-hidden="true">music_note</i>
+                        <div class="info">
+                            <span class="title">${song.title}</span>
+                        </div>
+                        <i class="material-icons" aria-hidden="true">chevron_right</i>
+                    `;
+                    listItem.onclick = () => showSongDetail(song.id);
+                    songListEl.appendChild(listItem);
+                });
+            });
+
+            // Fetch announcement
+            db.collection('announcements').doc('latest').onSnapshot((doc) => {
+                if (doc.exists) {
+                    announcementContent.textContent = doc.data().content;
+                    announcementInput.value = doc.data().content;
+                } else {
+                    announcementContent.textContent = '공지사항이 없습니다.';
+                }
+            });
+
+            // Admin functions
+            dDayElement.addEventListener('click', () => {
+                passwordInput.value = '';
+                passwordDialog.open();
+            });
+
+            document.getElementById('submit-password-button').addEventListener('click', () => {
+                const enteredPassword = passwordInput.value.trim();
+                // 관리자 비밀번호를 hsn1234로 고정 확인
+                if (enteredPassword === 'hsn1234') {
+                    // passwordDialog.close()는 data-mdc-dialog-action="ok"에 의해 자동 처리될 수 있으므로
+                    // 약간의 시간을 두고 다음 다이얼로그를 엽니다.
+                    setTimeout(() => {
+                        announcementDialog.open();
+                    }, 100);
+                } else {
+                    alert('비밀번호가 틀렸습니다.');
+                }
+            });
+
+            document.getElementById('save-announcement-button').addEventListener('click', () => {
+                const newAnnouncement = announcementInput.value;
+                db.collection('announcements').doc('latest').set({
+                    content: newAnnouncement,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Announcement saved');
+                }).catch(error => {
+                    console.error('Error saving announcement: ', error);
+                });
+            });
+
+            // History navigation
+            history.replaceState({ page: 'list' }, 'Song List');
+
+            window.addEventListener('popstate', (event) => {
+                if (event.state) {
+                    switch (event.state.page) {
+                        case 'list':
+                            showSongList();
+                            break;
+                        case 'detail':
+                            if (event.state.songId) {
+                                // Prevent adding to history again
+                                const song = songs.find(s => s.id === event.state.songId);
+                                if (song) {
+                                    currentSong = song;
+                                    document.getElementById('song-title').textContent = song.title;
+                                    if (song.media.parts) {
+                                        partTabsContainer.classList.remove('hidden');
+                                        selectPart('soprano');
+                                    } else {
+                                        partTabsContainer.classList.add('hidden');
+                                        loadFullMedia();
+                                    }
+                                    showView(songDetailContainer);
+                                }
+                            }
+                            break;
+                        default:
+                            showSongList();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
