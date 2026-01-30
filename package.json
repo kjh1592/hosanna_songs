@@ -1,0 +1,13 @@
+{
+    "name": "hosanna-song",
+    "version": "1.0.0",
+    "description": "호산나 성가대 칸타타 연습 웹 앱",
+    "scripts": {
+        "upload-data": "node upload_data.js",
+        "upload-media": "node upload_media.js"
+    },
+    "dependencies": {
+        "firebase": "^12.3.0",
+        "firebase-admin": "^13.5.0"
+    }
+}
