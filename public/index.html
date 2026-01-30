@@ -5,30 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>호산나 성가대 연습실</title>
-    <!-- Material Design Components -->
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- Material Design Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <style>
-        :root {
-            --mdc-theme-primary: #1E88E5;
-            --mdc-theme-secondary: #fdd835;
-            --mdc-theme-on-primary: #ffffff;
-            --text-primary-on-background: #212121;
-            --text-secondary-on-background: #757575;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f5f5f5;
-            background-image: url('https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2Fcover.jpg?alt=media');
-            background-size: cover;
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             background-attachment: fixed;
-            background-position: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
@@ -38,106 +34,265 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.92);
-            z-index: -1;
+            background-image: url('/res/cover.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        /* Animated Background Circle */
+        body::after {
+            content: '';
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(50px) rotate(180deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hidden {
             display: none;
         }
 
-        .mdc-top-app-bar {
-            background-color: var(--mdc-theme-primary);
+        /* Header with Glassmorphism */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #d-day {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #d-day:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         }
 
         main {
-            padding: 16px;
+            padding: 24px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        .mdc-card {
-            border-radius: 12px;
-            margin-bottom: 16px;
-            padding: 16px;
-            background: white;
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
         }
 
+        .glass-card:hover {
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .glass-card h2 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #announcement-content {
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* Song List */
         .song-list-item {
             display: flex;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            padding: 18px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
         }
 
         .song-list-item:hover {
-            background: #f5f5f5;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
         }
 
         .song-list-item .icon {
-            font-size: 40px;
-            color: var(--mdc-theme-primary);
-            margin-right: 16px;
-        }
-
-        .song-list-item .info {
-            flex-grow: 1;
+            font-size: 42px;
+            color: white;
+            margin-right: 18px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
         }
 
         .song-list-item .title {
-            font-size: 1.1em;
+            font-size: 1.15rem;
             font-weight: 500;
-            color: var(--text-primary-on-background);
+            color: white;
+            flex-grow: 1;
         }
 
-        .back-button-large {
-            height: 48px !important;
-            padding: 0 24px !important;
-            --mdc-typography-button-font-size: 1.25rem;
+        .song-list-item .material-icons:last-child {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Back Button */
+        .back-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            padding: 14px 28px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #song-title {
+            color: white;
+            font-weight: 600;
+            margin: 24px 0;
+            font-size: 1.8rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* Part Tabs */
         .part-tabs {
             display: flex;
-            gap: 8px;
-            margin: 16px 0;
+            gap: 14px;
+            margin: 24px 0;
             flex-wrap: wrap;
         }
 
         .part-tab {
             flex: 1;
-            min-width: 100px;
-            padding: 12px;
-            background: #f5f5f5;
-            border: 2px solid transparent;
-            border-radius: 8px;
+            min-width: 110px;
+            padding: 16px 22px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
             cursor: pointer;
             text-align: center;
             font-weight: 500;
-            transition: all 0.2s;
+            font-size: 1.05rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .part-tab:hover {
-            background: #e3f2fd;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .part-tab.active {
-            background: var(--mdc-theme-primary);
-            color: white;
-            border-color: var(--mdc-theme-primary);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+            font-weight: 600;
         }
 
-        /* Video Player */
+        /* Video Container */
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin: 16px auto;
-            background: #000;
-            border-radius: 8px;
+            max-width: 900px;
+            margin: 24px auto;
+            border-radius: 24px;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .video-container video,
@@ -148,44 +303,168 @@
 
         /* Custom Controls */
         .custom-controls {
-            margin-top: 16px;
-            padding: 16px;
-            background: #f9f9f9;
-            border-radius: 8px;
+            margin-top: 24px;
+            padding: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .control-group {
-            margin-bottom: 12px;
+            margin-bottom: 22px;
         }
 
         .control-group label {
             display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-secondary-on-background);
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: white;
+            font-size: 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .control-buttons {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .control-buttons button {
             flex: 1;
-            min-width: 60px;
+            min-width: 75px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .control-buttons button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .control-buttons button.active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
         }
 
         .loop-info {
-            padding: 8px;
-            background: #e3f2fd;
-            border-radius: 4px;
-            margin-top: 8px;
-            font-size: 0.9em;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            margin-top: 14px;
+            font-size: 0.95rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dialogs */
+        .dialog {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dialog.open {
+            display: flex;
+        }
+
+        .dialog-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dialog-content h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .dialog-content input,
+        .dialog-content textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .dialog-content textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .dialog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .dialog-actions button {
+            padding: 10px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+        }
+
+        .dialog-actions button.cancel {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2d3748;
+        }
+
+        .dialog-actions button.confirm {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .dialog-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.1rem;
+            }
+
+            #d-day {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+            }
+
             .part-tabs {
                 flex-direction: column;
             }
@@ -194,46 +473,72 @@
                 flex: none;
             }
 
+            .control-buttons {
+                flex-direction: column;
+            }
+
             .control-buttons button {
                 flex: none;
-                min-width: 80px;
+                width: 100%;
             }
+
+            main {
+                padding: 16px;
+            }
+
+            .glass-card {
+                padding: 20px;
+            }
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
 
-<body class="mdc-typography">
+<body>
 
-    <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                <span class="mdc-top-app-bar__title">호산나 성가대 연습실</span>
-            </section>
-            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" style="padding-right: 16px;">
-                <span id="d-day" style="font-size: 1.2em; font-weight: bold; color: white; cursor: pointer;"></span>
-            </section>
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">호산나 성가대 연습실</h1>
+            <span id="d-day"></span>
         </div>
     </header>
 
-    <main class="mdc-top-app-bar--fixed-adjust">
-        <div id="announcement-container" class="mdc-card">
-            <h2 class="mdc-typography--headline6" style="margin-bottom: 4px;">공지 사항</h2>
-            <p id="announcement-content" style="white-space: pre-wrap;"></p>
+    <main>
+        <div id="announcement-container" class="glass-card">
+            <h2>공지 사항</h2>
+            <p id="announcement-content"></p>
         </div>
 
-        <div id="song-list-container" class="mdc-card">
-            <h2 class="mdc-typography--headline6" style="margin-bottom: 4px;">생명되신 주님, 예수!</h2>
+        <div id="song-list-container" class="glass-card">
+            <h2>생명되신 주님, 예수!</h2>
             <ul id="song-list" style="list-style: none; padding: 0; margin: 0;"></ul>
         </div>
 
-        <div id="song-detail-container" class="mdc-card hidden">
-            <button class="mdc-button back-button-large" onclick="history.back()">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_back</i>
-                <span class="mdc-button__label">목록</span>
+        <div id="song-detail-container" class="glass-card hidden">
+            <button class="back-button" onclick="history.back()">
+                <i class="material-icons">arrow_back</i>
+                <span>목록</span>
             </button>
-            <h2 id="song-title" class="mdc-typography--headline5" style="margin-top: 16px;"></h2>
+            <h2 id="song-title"></h2>
 
-            <!-- Part Tabs (for songs 1-6) -->
+            <!-- Part Tabs -->
             <div id="part-tabs-container" class="part-tabs">
                 <div class="part-tab" data-part="soprano">소프라노</div>
                 <div class="part-tab" data-part="alto">알토</div>
@@ -249,106 +554,49 @@
                 <div class="control-group">
                     <label>재생 속도</label>
                     <div class="control-buttons">
-                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="0.5">
-                            <span class="mdc-button__label">0.5x</span>
-                        </button>
-                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="0.75">
-                            <span class="mdc-button__label">0.75x</span>
-                        </button>
-                        <button class="mdc-button mdc-button--raised speed-btn" data-speed="1">
-                            <span class="mdc-button__label">1x</span>
-                        </button>
-                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="1.25">
-                            <span class="mdc-button__label">1.25x</span>
-                        </button>
-                        <button class="mdc-button mdc-button--outlined speed-btn" data-speed="1.5">
-                            <span class="mdc-button__label">1.5x</span>
-                        </button>
+                        <button class="speed-btn" data-speed="0.5">0.5x</button>
+                        <button class="speed-btn" data-speed="0.75">0.75x</button>
+                        <button class="speed-btn active" data-speed="1">1x</button>
+                        <button class="speed-btn" data-speed="1.25">1.25x</button>
+                        <button class="speed-btn" data-speed="1.5">1.5x</button>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label>구간 반복</label>
                     <div class="control-buttons">
-                        <button id="set-a-btn" class="mdc-button mdc-button--outlined">
-                            <span class="mdc-button__label">A 지점 설정</span>
-                        </button>
-                        <button id="set-b-btn" class="mdc-button mdc-button--outlined">
-                            <span class="mdc-button__label">B 지점 설정</span>
-                        </button>
-                        <button id="toggle-loop-btn" class="mdc-button mdc-button--outlined">
-                            <span class="mdc-button__label">반복 시작</span>
-                        </button>
-                        <button id="clear-loop-btn" class="mdc-button mdc-button--outlined">
-                            <span class="mdc-button__label">초기화</span>
-                        </button>
+                        <button id="set-a-btn">A 지점 설정</button>
+                        <button id="set-b-btn">B 지점 설정</button>
+                        <button id="toggle-loop-btn">반복 시작</button>
+                        <button id="clear-loop-btn">초기화</button>
                     </div>
                     <div id="loop-info" class="loop-info hidden"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Dialogs -->
-        <div id="password-dialog" class="mdc-dialog">
-            <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
-                    <h2 class="mdc-dialog__title">관리자 비밀번호</h2>
-                    <div class="mdc-dialog__content">
-                        <div class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField"
-                            style="width: 100%;">
-                            <input type="password" id="password-input" class="mdc-text-field__input">
-                            <div class="mdc-notched-outline">
-                                <div class="mdc-notched-outline__leading"></div>
-                                <div class="mdc-notched-outline__notch">
-                                    <label for="password-input" class="mdc-floating-label">비밀번호</label>
-                                </div>
-                                <div class="mdc-notched-outline__trailing"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mdc-dialog__actions">
-                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
-                            <span class="mdc-button__label">취소</span>
-                        </button>
-                        <button type="button" id="submit-password-button" class="mdc-button mdc-dialog__button"
-                            data-mdc-dialog-action="ok">
-                            <span class="mdc-button__label">확인</span>
-                        </button>
-                    </div>
+        <!-- Password Dialog -->
+        <div id="password-dialog" class="dialog">
+            <div class="dialog-content">
+                <h2>관리자 비밀번호</h2>
+                <input type="password" id="password-input" placeholder="비밀번호를 입력하세요">
+                <div class="dialog-actions">
+                    <button class="cancel" onclick="closePasswordDialog()">취소</button>
+                    <button class="confirm" onclick="submitPassword()">확인</button>
                 </div>
             </div>
-            <div class="mdc-dialog__scrim"></div>
         </div>
 
-        <div id="announcement-dialog" class="mdc-dialog">
-            <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
-                    <h2 class="mdc-dialog__title">공지사항 수정</h2>
-                    <div class="mdc-dialog__content">
-                        <div class="mdc-text-field mdc-text-field--textarea mdc-text-field--outlined"
-                            data-mdc-auto-init="MDCTextField" style="width: 100%;">
-                            <textarea id="announcement-input" class="mdc-text-field__input" rows="8"></textarea>
-                            <div class="mdc-notched-outline">
-                                <div class="mdc-notched-outline__leading"></div>
-                                <div class="mdc-notched-outline__notch">
-                                    <label for="announcement-input" class="mdc-floating-label">공지 내용</label>
-                                </div>
-                                <div class="mdc-notched-outline__trailing"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mdc-dialog__actions">
-                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
-                            <span class="mdc-button__label">취소</span>
-                        </button>
-                        <button type="button" id="save-announcement-button" class="mdc-button mdc-dialog__button"
-                            data-mdc-dialog-action="ok">
-                            <span class="mdc-button__label">저장</span>
-                        </button>
-                    </div>
+        <!-- Announcement Dialog -->
+        <div id="announcement-dialog" class="dialog">
+            <div class="dialog-content">
+                <h2>공지사항 수정</h2>
+                <textarea id="announcement-input" placeholder="공지사항을 입력하세요"></textarea>
+                <div class="dialog-actions">
+                    <button class="cancel" onclick="closeAnnouncementDialog()">취소</button>
+                    <button class="confirm" onclick="saveAnnouncement()">저장</button>
                 </div>
             </div>
-            <div class="mdc-dialog__scrim"></div>
         </div>
     </main>
 
@@ -359,30 +607,25 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            mdc.autoInit();
-
             // D-Day 계산
             const dDayElement = document.getElementById('d-day');
-            if (dDayElement) {
-                const dDay = new Date('2026-04-05');
-                const today = new Date();
-                dDay.setHours(0, 0, 0, 0);
-                today.setHours(0, 0, 0, 0);
+            const dDay = new Date('2026-04-05');
+            const today = new Date();
+            dDay.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
 
-                const diffTime = dDay.getTime() - today.getTime();
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffTime = dDay.getTime() - today.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-                if (diffDays > 0) {
-                    dDayElement.textContent = `D-${diffDays}`;
-                } else if (diffDays === 0) {
-                    dDayElement.textContent = 'D-Day';
-                } else {
-                    dDayElement.textContent = `D+${Math.abs(diffDays)}`;
-                }
+            if (diffDays > 0) {
+                dDayElement.textContent = `D-${diffDays}`;
+            } else if (diffDays === 0) {
+                dDayElement.textContent = 'D-Day';
+            } else {
+                dDayElement.textContent = `D+${Math.abs(diffDays)}`;
             }
 
             const db = firebase.firestore();
-
             let songs = [];
             let currentSong = null;
             let currentPart = null;
@@ -400,13 +643,6 @@
             const announcementContent = document.getElementById('announcement-content');
             const partTabsContainer = document.getElementById('part-tabs-container');
             const mediaContainer = document.getElementById('media-container');
-            const customControls = document.getElementById('custom-controls');
-
-            // Dialogs
-            const passwordDialog = new mdc.dialog.MDCDialog(document.getElementById('password-dialog'));
-            const announcementDialog = new mdc.dialog.MDCDialog(document.getElementById('announcement-dialog'));
-            const passwordInput = document.getElementById('password-input');
-            const announcementInput = document.getElementById('announcement-input');
 
             function showView(viewToShow) {
                 [songListContainer, songDetailContainer].forEach(view => {
@@ -431,14 +667,10 @@
                 currentSong = song;
                 document.getElementById('song-title').textContent = song.title;
 
-                // Show/hide part tabs based on song type
                 if (song.media.parts) {
-                    // Songs 1-6: show part tabs
                     partTabsContainer.classList.remove('hidden');
-                    // Select soprano by default
                     setTimeout(() => selectPart('soprano'), 100);
                 } else {
-                    // Song 7: hide part tabs, show full media
                     partTabsContainer.classList.add('hidden');
                     loadFullMedia();
                 }
@@ -452,7 +684,6 @@
 
                 currentPart = partName;
 
-                // Update tab UI
                 document.querySelectorAll('.part-tab').forEach(tab => {
                     if (tab.dataset.part === partName) {
                         tab.classList.add('active');
@@ -461,7 +692,6 @@
                     }
                 });
 
-                // Load part video
                 const partData = currentSong.media.parts[partName];
                 if (partData && partData.video) {
                     loadVideo(partData.video);
@@ -473,7 +703,6 @@
 
                 mediaContainer.innerHTML = '';
 
-                // Video
                 if (currentSong.media.full.video) {
                     const video = document.createElement('video');
                     video.controls = true;
@@ -484,7 +713,6 @@
                     setupMediaControls(video);
                 }
 
-                // Audio
                 if (currentSong.media.full.audio) {
                     const audio = document.createElement('audio');
                     audio.controls = true;
@@ -507,29 +735,19 @@
             }
 
             function setupMediaControls(mediaElement) {
-                // Reset loop state
                 resetLoop();
 
-                // Speed buttons
                 document.querySelectorAll('.speed-btn').forEach(btn => {
                     btn.onclick = () => {
                         const speed = parseFloat(btn.dataset.speed);
                         mediaElement.playbackRate = speed;
 
-                        // Update button styles
                         document.querySelectorAll('.speed-btn').forEach(b => {
-                            if (b === btn) {
-                                b.classList.add('mdc-button--raised');
-                                b.classList.remove('mdc-button--outlined');
-                            } else {
-                                b.classList.remove('mdc-button--raised');
-                                b.classList.add('mdc-button--outlined');
-                            }
+                            b.classList.toggle('active', b === btn);
                         });
                     };
                 });
 
-                // Loop buttons
                 document.getElementById('set-a-btn').onclick = () => setLoopPoint('A');
                 document.getElementById('set-b-btn').onclick = () => setLoopPoint('B');
                 document.getElementById('toggle-loop-btn').onclick = toggleLoop;
@@ -565,20 +783,19 @@
                 const btn = document.getElementById('toggle-loop-btn');
 
                 if (isLooping) {
-                    btn.classList.add('mdc-button--raised');
-                    btn.querySelector('.mdc-button__label').textContent = '반복 중지';
+                    btn.classList.add('active');
+                    btn.textContent = '반복 중지';
                     currentMediaElement.currentTime = loopA;
                     currentMediaElement.play();
 
-                    // Check loop
                     loopInterval = setInterval(() => {
                         if (currentMediaElement.currentTime >= loopB) {
                             currentMediaElement.currentTime = loopA;
                         }
                     }, 100);
                 } else {
-                    btn.classList.remove('mdc-button--raised');
-                    btn.querySelector('.mdc-button__label').textContent = '반복 시작';
+                    btn.classList.remove('active');
+                    btn.textContent = '반복 시작';
                     if (loopInterval) {
                         clearInterval(loopInterval);
                         loopInterval = null;
@@ -599,8 +816,8 @@
                 }
 
                 const btn = document.getElementById('toggle-loop-btn');
-                btn.classList.remove('mdc-button--raised');
-                btn.querySelector('.mdc-button__label').textContent = '반복 시작';
+                btn.classList.remove('active');
+                btn.textContent = '반복 시작';
 
                 updateLoopInfo();
             }
@@ -650,11 +867,11 @@
                     const listItem = document.createElement('li');
                     listItem.className = "song-list-item";
                     listItem.innerHTML = `
-                        <i class="material-icons icon" aria-hidden="true">music_note</i>
-                        <div class="info">
+                        <i class="material-icons icon">music_note</i>
+                        <div style="flex-grow: 1;">
                             <span class="title">${song.title}</span>
                         </div>
-                        <i class="material-icons" aria-hidden="true">chevron_right</i>
+                        <i class="material-icons">chevron_right</i>
                     `;
                     listItem.onclick = () => showSongDetail(song.id);
                     songListEl.appendChild(listItem);
@@ -665,7 +882,7 @@
             db.collection('announcements').doc('latest').onSnapshot((doc) => {
                 if (doc.exists) {
                     announcementContent.textContent = doc.data().content;
-                    announcementInput.value = doc.data().content;
+                    document.getElementById('announcement-input').value = doc.data().content;
                 } else {
                     announcementContent.textContent = '공지사항이 없습니다.';
                 }
@@ -673,35 +890,44 @@
 
             // Admin functions
             dDayElement.addEventListener('click', () => {
-                passwordInput.value = '';
-                passwordDialog.open();
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-dialog').classList.add('open');
             });
 
-            document.getElementById('submit-password-button').addEventListener('click', () => {
-                const enteredPassword = passwordInput.value;
+            window.closePasswordDialog = () => {
+                document.getElementById('password-dialog').classList.remove('open');
+            };
+
+            window.closeAnnouncementDialog = () => {
+                document.getElementById('announcement-dialog').classList.remove('open');
+            };
+
+            window.submitPassword = () => {
+                const enteredPassword = document.getElementById('password-input').value;
                 db.collection('config').doc('admin').get().then(doc => {
                     if (doc.exists && doc.data().password === enteredPassword) {
-                        announcementDialog.open();
+                        closePasswordDialog();
+                        document.getElementById('announcement-dialog').classList.add('open');
                     } else {
                         alert('비밀번호가 틀렸습니다.');
                     }
                 }).catch(error => {
-                    console.error("Error getting password:", error);
+                    console.error("Error:", error);
                     alert('비밀번호 확인 중 오류가 발생했습니다.');
                 });
-            });
+            };
 
-            document.getElementById('save-announcement-button').addEventListener('click', () => {
-                const newAnnouncement = announcementInput.value;
+            window.saveAnnouncement = () => {
+                const newAnnouncement = document.getElementById('announcement-input').value;
                 db.collection('announcements').doc('latest').set({
                     content: newAnnouncement,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
-                    console.log('Announcement saved');
+                    closeAnnouncementDialog();
                 }).catch(error => {
-                    console.error('Error saving announcement: ', error);
+                    console.error('Error:', error);
                 });
-            });
+            };
 
             // History navigation
             history.replaceState({ page: 'list' }, 'Song List');
@@ -714,7 +940,6 @@
                             break;
                         case 'detail':
                             if (event.state.songId) {
-                                // Prevent adding to history again
                                 const song = songs.find(s => s.id === event.state.songId);
                                 if (song) {
                                     currentSong = song;
@@ -740,4 +965,3 @@
 </body>
 
 </html>
-<parameter name="Complexity">9

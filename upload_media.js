@@ -7,7 +7,7 @@ const serviceAccount = require('./serviceAccountKey.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: 'hosanna-song.firebasestorage.app'
+    storageBucket: 'hosanna-song.appspot.com'
 });
 
 const bucket = admin.storage().bucket();

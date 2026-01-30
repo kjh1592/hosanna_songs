@@ -6,16 +6,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F1-s.mp4?alt=media"
+                    "video": "/media/1-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F1-a.mp4?alt=media"
+                    "video": "/media/1-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F1-t.mp4?alt=media"
+                    "video": "/media/1-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F1-b.mp4?alt=media"
+                    "video": "/media/1-b.mp4"
                 }
             }
         }
@@ -27,16 +27,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F2-s.mp4?alt=media"
+                    "video": "/media/2-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F2-a.mp4?alt=media"
+                    "video": "/media/2-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F2-t.mp4?alt=media"
+                    "video": "/media/2-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F2-b.mp4?alt=media"
+                    "video": "/media/2-b.mp4"
                 }
             }
         }
@@ -48,16 +48,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F3-s.mp4?alt=media"
+                    "video": "/media/3-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F3-a.mp4?alt=media"
+                    "video": "/media/3-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F3-t.mp4?alt=media"
+                    "video": "/media/3-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F3-b.mp4?alt=media"
+                    "video": "/media/3-b.mp4"
                 }
             }
         }
@@ -69,16 +69,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F4-s.mp4?alt=media"
+                    "video": "/media/4-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F4-a.mp4?alt=media"
+                    "video": "/media/4-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F4-t.mp4?alt=media"
+                    "video": "/media/4-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F4-b.mp4?alt=media"
+                    "video": "/media/4-b.mp4"
                 }
             }
         }
@@ -90,16 +90,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F5-s.mp4?alt=media"
+                    "video": "/media/5-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F5-a.mp4?alt=media"
+                    "video": "/media/5-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F5-t.mp4?alt=media"
+                    "video": "/media/5-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F5-b.mp4?alt=media"
+                    "video": "/media/5-b.mp4"
                 }
             }
         }
@@ -111,16 +111,16 @@
         "media": {
             "parts": {
                 "soprano": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F6-s.mp4?alt=media"
+                    "video": "/media/6-s.mp4"
                 },
                 "alto": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F6-a.mp4?alt=media"
+                    "video": "/media/6-a.mp4"
                 },
                 "tenor": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F6-t.mp4?alt=media"
+                    "video": "/media/6-t.mp4"
                 },
                 "bass": {
-                    "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2F6-b.mp4?alt=media"
+                    "video": "/media/6-b.mp4"
                 }
             }
         }
@@ -131,8 +131,8 @@
         "order": 7,
         "media": {
             "full": {
-                "video": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2Ffull-movie.mp4?alt=media",
-                "audio": "https://firebasestorage.googleapis.com/v0/b/hosanna-song.firebasestorage.app/o/media%2Ffull-audio.mp3?alt=media"
+                "video": "/media/full-movie.mp4",
+                "audio": "/media/full-audio.mp3"
             }
         }
     }
